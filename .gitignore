@@ -1,6 +1,6 @@
 .idea
 
-# ui files:
+### ui files:
 /ui/node_modules
 
 # Output

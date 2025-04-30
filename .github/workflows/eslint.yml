@@ -1,0 +1,34 @@
+name: ESLint
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'ui/**'
+  pull_request:
+    branches: [ main, master ]
+    paths:
+      - 'ui/**'
+
+jobs:
+  eslint:
+    name: Run ESLint
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+          cache-dependency-path: 'ui/package-lock.json'
+
+      - name: Install dependencies
+        working-directory: ./ui
+        run: npm ci
+
+      - name: Run ESLint
+        working-directory: ./ui
+        run: npx eslint --ext .js,.ts,.svelte .
